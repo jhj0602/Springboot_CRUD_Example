@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" th:href="@{/css/board.css}">
+</head>
+<body>
+<!-- HEADER -->
+<div th:insert="common/header.html" id="header"></div>
+
+<a th:href="@{/post}">글쓰기</a>
+
+<table>
+    <thead>
+    <tr>
+        <th class="one wide">번호</th>
+        <th class="ten wide">글제목</th>
+        <th class="two wide">작성자</th>
+        <th class="three wide">작성일</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <!-- CONTENTS !-->
+    <!--thymeleaf 에서 반복문을 사용하는 부분 -->
+    <!-- 컨트롤러가 넘겨주는 변수는 ${ } 으로 받을수 있다-->
+    <!-- boardList는 컨트롤러가 넘겨주는 변수 ,원소는 board 변수로 사용하여 각 속성을 사용   -->
+    <tr th:each="board : ${boardList}">
+
+        <td>
+    <!-- 변수값을 escape 처리하여, 태그의 텍스트로 사용합니다 -->
+            <span th:text="${board.id}"></span>
+        </td>
+        <td>
+            <!-- 글 제목을 누르면 상세 페이지로 이동하기 위해 path variable을 사용 -->
+            <a th:href="@{'/post/' + ${board.id}}">
+                <span th:text="${board.title}"></span>
+            </a>
+        </td>
+        <td>
+            <span th:text="${board.writer}"></span>
+        </td>
+        <td>
+<!--    #temporals.format() 메서드를 사용하여 날짜를 포맷팅하는 방법입니다. -->
+            <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- FOOTER -->
+<div th:insert="common/footer.html" id="footer"></div>
+</body>
+</html>
