@@ -6,6 +6,7 @@
 </head>
 <body>
 <form th:action="@{'/post/edit/' + ${boardDto.id}}" method="post">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <input type="hidden" name="_method" value="put"/>
     <input type="hidden" name="id" th:value="${boardDto.id}"/>
 
